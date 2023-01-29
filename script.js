@@ -90,19 +90,15 @@ filter.addEventListener('keyup',filteritems)
 function addItem(e)
 {
   e.preventDefault();
-  var newItem=document.getElementById("item").value;
+  var newItem=document.getElementById("item").value+" ";
+  var newItem1=document.getElementById("item1").value;
 
 // Saving to the text 
-var text = document.getElementById("item").value;
-    var blob = new Blob([text], {type: "text/plain"});
-    var link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    
-
 //   Creating List
 var li=document.createElement("li");
 li.className="list-group-item";
 li.appendChild(document.createTextNode(newItem));
+li.appendChild(document.createTextNode(newItem1));
 // Creating delete button
 
 var del=document.createElement("button");
@@ -139,7 +135,9 @@ function filteritems(e)
 //    Convert it to array 
 Array.from(items).forEach(function(item){
 var itemName=item.firstChild.textContent;
-if(itemName.toLocaleLowerCase().indexOf(text1)!=-1)
+var firstTextNode = item.childNodes[0].textContent;
+var secondTextNode = item.childNodes[1].textContent;
+if(firstTextNode.toLocaleLowerCase().indexOf(text1)!=-1||secondTextNode.toLocaleLowerCase().indexOf(text1)!=-1)
 {
 item.style.display="block";
 }
