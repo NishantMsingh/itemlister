@@ -1,70 +1,68 @@
-// var list=document.getElementsByTagName("li");
-// list[3].style.backgroundColor="green";
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
+var filter = document.getElementById('filter');
+itemList.style.cursor="pointer";
+// Form submit event
+form.addEventListener('submit', addItem);
+// Delete event
+itemList.addEventListener('click', removeItem);
+// Filter event
+filter.addEventListener('keyup', filterItems);
 
-// var vis=document.querySelector(".list-group-item:nth-child(3)");
-// var col=document.querySelector(".list-group-item:nth-child(2)");
-// col.style.color="green";
-// vis.style.display="none";
+// Add item
+function addItem(e){
+  e.preventDefault();
 
-// for (var i = 0; i < list.length; i++) {
-//     // Change the font weight to bold
-//     list[i].style.fontWeight = "bold";
-//   }
+  // Get input value
+  var newItem = document.getElementById('item').value;
 
-// Using Query Selector All
-// var list=document.querySelectorAll("li:nth-child(odd)");
-// for(i=0;i<list.length;i++)
-// {
-//  list[i].style.backgroundColor="green";
-// }
-// var col=document.querySelector("li:nth-child(2)");
-// col.style.color="green";
+  // Create new li element
+  var li = document.createElement('li');
+  // Add class
+  li.className = 'list-group-item';
+  // Add text node with input value
+  li.appendChild(document.createTextNode(newItem));
 
-// tRAVERSING THE DOM  
-var itemlist=document.querySelector("#items");
-//Parent node property
-// console.log(itemlist.parentNode);
-// console.log(itemlist.parentNode.parentNode);
-// console.log(itemlist.parentNode.parentNode.parentNode);
-// itemlist.parentElement.style.backgroundColor="#fcfcfc";
+  // Create del button element
+  var deleteBtn = document.createElement('button');
+  deleteBtn.style.cursor="pointer";
 
-// Parent Element
-//  console.log(itemlist.parentElement);
-// console.log(itemlist.parentNode.parentElement);
-// console.log(itemlist.parentNode.parentNode.parentElement);
+  // Add classes to del button
+  deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
 
-// Child Node 
-// console.log(itemlist.childNodes);
-// console.log(itemlist.children[2].style.color="white");
-// console.log(itemlist.firstChild);
-// console.log(itemlist.lastChild);
-// console.log(itemlist.lastElementChild);
-// itemlist.lastElementChild.innerHTML="Nishant";
+  // Append text node
+  deleteBtn.appendChild(document.createTextNode('X'));
 
+  // Append button to li
+  li.appendChild(deleteBtn);
 
-// Siblings 
-// console.log(itemlist.nextElementSibling);
-// console.log(itemlist.nextSibling);
+  // Append li to list
+  itemList.appendChild(li);
+}
 
-// // Previous sibling 
-// console.log(itemlist.previousSibling); 
-// console.log(itemlist.previousElementSibling); 
+// Remove item
+function removeItem(e){
+  if(e.target.classList.contains('delete')){
+    if(confirm('Are You Sure?')){
+      var li = e.target.parentElement;
+      itemList.removeChild(li);
+    }
+  }
+}
 
-// Create Element and insert  
-
-var ndiv=document.createElement("div");
-ndiv.className="Hello";
-ndiv.id="hello1";
-ndiv.setAttribute("title","Hello div");
-
-
-// Creating text node 
-var newdivtxt=document.createTextNode("Hello");
-ndiv.appendChild(newdivtxt);
-console.log(ndiv);
-
-// Insert into HTML 
-var container=document.querySelector("header .container");
-var h1=document.querySelector("header h1");
-container.insertBefore(ndiv,h1);
-ndiv.style.fontSize="30px";
+// Filter Items
+function filterItems(e){
+  // convert text to lowercase
+  var text = e.target.value.toLowerCase();
+  // Get lis
+  var items = itemList.getElementsByTagName('li');
+  // Convert to an array
+  Array.from(items).forEach(function(item){
+    var itemName = item.firstChild.textContent;
+    if(itemName.toLowerCase().indexOf(text) != -1){
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
