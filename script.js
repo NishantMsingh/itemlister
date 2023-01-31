@@ -68,7 +68,7 @@
 // var h1=document.querySelector("header h1");
 // container.insertBefore(ndiv,h1);
 // ndiv.style.fontSize="30px";
-
+ var i=0;
 
 // Working on the application
 var form=document.getElementById("addForm");
@@ -92,7 +92,12 @@ function addItem(e)
   e.preventDefault();
   var newItem=document.getElementById("item").value+" ";
   var newItem1=document.getElementById("item1").value;
+  var x=newItem+" "+newItem1;
+document.cookie=`${i}=${x}`
+sessionStorage.setItem(`${i}`,`${x}`);
 
+localStorage.setItem(`${i}`,`${x}`);
+i++;
 // Saving to the text 
 //   Creating List
 var li=document.createElement("li");
